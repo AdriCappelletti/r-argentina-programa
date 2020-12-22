@@ -1,0 +1,67 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: sans-serif;
+    
+}
+
+
+.head-text{
+    width: 50%;
+    margin: 2em auto;
+    text-align: center;
+
+}
+
+.form-datos-personales{
+
+    width: 50%;
+    height: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-datos-personales__group{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+label{
+    margin-bottom: .5em;
+}
+
+input{
+    margin-bottom: 1em;
+    padding: .5em;
+}
+
+#enviar{
+    margin: 3em 0;
+    padding: 1em;
+    width: 150px;
+    border-radius: .5em;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    color: white;
+    background:hsl(257, 40%, 49%);
+}
+
+#display-info{
+    width: 20%;
+    height: 200px;
+    margin: 0 auto;
+
+    text-align: center;
+    
+}
+
+
