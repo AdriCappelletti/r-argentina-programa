@@ -80,8 +80,6 @@ function createMember(index) {
   $newDiv.appendChild($newInput)
 
   $memberDiv.appendChild($newDiv);
-  // const membersDiv = document.querySelector("#members-form");
-  // membersDiv.appendChild($memberDiv);
 }
 
 function createMembers() {
