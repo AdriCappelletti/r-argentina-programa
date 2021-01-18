@@ -53,6 +53,7 @@ function validarDescripcionRegalo(descripcion) {
 }
 
 function validarForm(event){
+  
   const nombre = $form.nombre.value
   const ciudad = $form.ciudad.value
   const descripcion = $form['descripcion-regalo'].value
@@ -75,12 +76,12 @@ event.preventDefault()
 function manejarErrores(errores){
   errorNombre = errores.nombre
   errorCiudad = errores.ciudad
-  errorDescripcion = errores.descripcion
+  errorDescripcion = errores.errorDescripcionRegalo
 
   if (errorNombre) {
     $form.nombre.className = 'error'
   } else{
-    $form.ciudad.className = ''
+    $form.nombre.className = ''
   }
 
 
@@ -91,10 +92,10 @@ function manejarErrores(errores){
   }
 
 
-  if (errorDescripcionRegalo) {
+  if (errorDescripcion) {
     $form['descripcion-regalo'].className = "error"
   } else{
-    $form.ciudad.className = ''
+    $form['descripcion-regalo'].className = ''
   }
 }
 
