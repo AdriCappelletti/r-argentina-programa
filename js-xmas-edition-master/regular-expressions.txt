@@ -2,8 +2,8 @@
 Regular Expressions
 ---------------------------------------
 
-Read about RegExp here, very simple explanation with
-a bunch of examples for everything:
+Podes leer sobre RegExp acá, Eplicaciones simples 
+con un monton de ejemplos para todo:
 **  http://eloquentjavascript.net/09_regexp.html
 
 

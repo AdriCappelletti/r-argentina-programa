@@ -101,6 +101,10 @@ footer a:hover {
   color: white;
 }
 
+.error{
+  border: 1px solid red;
+}
+
 @media all and (max-width: 640px) {
     header h1 {
         display: none;

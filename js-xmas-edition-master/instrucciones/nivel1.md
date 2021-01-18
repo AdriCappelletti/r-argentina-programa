@@ -102,8 +102,10 @@ Para validar nuestro formulario, vamos a tener  que hacer lo siguiente:
   console.log(/abc/.test("abxde"));
     // → false
   ```
+  
 
   Para validar que sólo tenga letras, podemos hacer:
+
 
   `const contieneSoloLetras = /^[A-z]+$/.test(valor);`
 
