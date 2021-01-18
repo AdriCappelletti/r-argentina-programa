@@ -91,7 +91,7 @@ function manejarErrores(errores){
   }
 
 
-  if (errorNombre) {
+  if (errorDescripcionRegalo) {
     $form['descripcion-regalo'].className = "error"
   } else{
     $form.ciudad.className = ''
