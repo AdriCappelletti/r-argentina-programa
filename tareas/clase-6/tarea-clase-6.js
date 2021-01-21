@@ -18,51 +18,29 @@ Punto bonus: si hay inputs vacíos, ignorarlos en el cálculo (no contarlos como
 const $membersLength = document.querySelector("#family-members");
 const $sendButton = document.querySelector("#members-button");
 const $calculate = document.querySelector("#calculate");
-const $clear = document.querySelector('#clear')
+const $reset = document.querySelector('#restart')
 
 $sendButton.onclick = function () {
   deleteMembers();
   createMembers();
-
-  // $resetButton.style.display = 'none'
+  
 
   return false;
 };
-
-// $resetButton.onclick = function () {
-//   deleteMembers();
-// };
 
 $calculate.onclick = function () {
-  const memberAge = membersAges();
-  const averageResult = document.createTextNode(
-    "La edad promedio es: " + averageAge(memberAge)
-  );
-  const $averageAge = document.querySelector("#average-age");
-  $averageAge.appendChild(averageResult);
 
-  const oldestResult = document.createTextNode(
-    "La mayor edad es: " + oldestMember(memberAge)
-  );
-  const $oldestMember = document.querySelector("#oldest-member");
-  $oldestMember.appendChild(oldestResult);
 
-  const youngestResult = document.createTextNode(
-    "La menor edad es: " + youngestMember(memberAge)
-  );
-  const $youngestMember = document.querySelector("#youngest-member");
-  $youngestMember.appendChild(youngestResult);
 
-  // $clear.style.display = 'block'
 
   return false;
 };
 
-$clear.onlcik = function () {
-  deleteMembers();
+$reset.onclick = function(){
+  deleteMembers()
+  $reset.className = 'oculto'
+}
 
-  return false
-};
 
 function createMember(index) {
   const $memberDiv = document.querySelector('#members-div');
@@ -75,11 +53,14 @@ function createMember(index) {
   $newInput.className = "member";
 
   const $newDiv = document.createElement('div')
-  $newDiv.className = '.member-div'
+  $newDiv.className = 'member-div'
   $newDiv.appendChild($newLabel)
   $newDiv.appendChild($newInput)
 
   $memberDiv.appendChild($newDiv);
+  $reset.className = ''
+
+  return false
 }
 
 function createMembers() {
@@ -93,7 +74,7 @@ function createMembers() {
     $calculate.style.display = "block";
   } else {
     $calculate.style.display = "none";
-  }
+  } 
 }
 
 function deleteMembers() {
@@ -101,7 +82,7 @@ function deleteMembers() {
   for (let i = 0; i < memberDiv.length; i++) {
     memberDiv[i].remove();
   }
-
+  $calculate.style.display = 'none'
 }
 
 function membersAges() {
@@ -146,4 +127,25 @@ function oldestMember(memberAge) {
   }
 
   return majorNumber;
+}
+
+function showResults(){
+  const memberAge = membersAges();
+  const averageResult = document.createTextNode(
+    "La edad promedio es: " + averageAge(memberAge)
+  );
+  const $averageAge = document.querySelector("#average-age");
+  $averageAge.appendChild(averageResult);
+
+  const oldestResult = document.createTextNode(
+    "La mayor edad es: " + oldestMember(memberAge)
+  );
+  const $oldestMember = document.querySelector("#oldest-member");
+  $oldestMember.appendChild(oldestResult);
+
+  const youngestResult = document.createTextNode(
+    "La menor edad es: " + youngestMember(memberAge)
+  );
+  const $youngestMember = document.querySelector("#youngest-member");
+  $youngestMember.appendChild(youngestResult);
 }

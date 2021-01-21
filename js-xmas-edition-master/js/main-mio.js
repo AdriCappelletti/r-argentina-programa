@@ -65,7 +65,7 @@ function validarForm(event){
   const errores = {
   nombre: errorNombre,
   ciudad: errorCiudad,
-  errorDescripcionRegalo: errorDescripcionRegalo
+  'descripcion-regalo': errorDescripcionRegalo
 };
 
 manejarErrores(errores)
@@ -74,30 +74,46 @@ event.preventDefault()
 }
 
 function manejarErrores(errores){
-  errorNombre = errores.nombre
-  errorCiudad = errores.ciudad
-  errorDescripcion = errores.errorDescripcionRegalo
 
-  if (errorNombre) {
-    $form.nombre.className = 'error'
+const keys = Object.keys(errores)
+
+keys.forEach(function(key){
+  const error = errores[key]
+  if (error) {
+    $form[key].className = 'error'
   } else{
-    $form.nombre.className = ''
+    $form[key].className = ''
   }
 
-
-  if (errorCiudad) {
-    $form.ciudad.className = 'error'
-  } else{
-    $form.ciudad.className = ''
-  }
+})
 
 
-  if (errorDescripcion) {
-    $form['descripcion-regalo'].className = "error"
-  } else{
-    $form['descripcion-regalo'].className = ''
-  }
+  
 }
+  // errorNombre = errores.nombre
+  // errorCiudad = errores.ciudad
+  // errorDescripcion = errores.errorDescripcionRegalo
+
+  // if (errorNombre) {
+  //   $form.nombre.className = 'error'
+  // } else{
+  //   $form.nombre.className = ''
+  // }
+
+
+  // if (errorCiudad) {
+  //   $form.ciudad.className = 'error'
+  // } else{
+  //   $form.ciudad.className = ''
+  // }
+
+
+  // if (errorDescripcion) {
+  //   $form['descripcion-regalo'].className = "error"
+  // } else{
+  //   $form['descripcion-regalo'].className = ''
+  // }
+// }
 
 const $form = document.querySelector("#carta-a-santa");
 $form.onsubmit = validarForm;
