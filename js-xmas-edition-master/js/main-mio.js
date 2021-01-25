@@ -1,5 +1,3 @@
-
-
 // Formas de agarrar un input
 
 // const nombre = $form.nombre;
@@ -41,6 +39,7 @@ function validarCiudad(ciudad) {
 }
 
 function validarDescripcionRegalo(descripcion) {
+  
   if (descripcion.length === 0) {
     return "tu descripción debe tener al menos 1 caracter!";
   } else if (descripcion.length >= 120) {
@@ -52,67 +51,96 @@ function validarDescripcionRegalo(descripcion) {
   return "";
 }
 
-function validarForm(event){
-  
-  const nombre = $form.nombre.value
-  const ciudad = $form.ciudad.value
-  const descripcion = $form['descripcion-regalo'].value
-  
-  const errorNombre = validarNombre(nombre)
-  const errorCiudad = validarCiudad(ciudad)
-  const errorDescripcionRegalo = validarDescripcionRegalo(descripcion)
+function validarForm(event) {
+  borrarErrores()
+  const nombre = $form.nombre.value;
+  const ciudad = $form.ciudad.value;
+  const descripcion = $form["descripcion-regalo"].value;
+
+  const errorNombre = validarNombre(nombre);
+  const errorCiudad = validarCiudad(ciudad);
+  const errorDescripcionRegalo = validarDescripcionRegalo(descripcion);
 
   const errores = {
-  nombre: errorNombre,
-  ciudad: errorCiudad,
-  'descripcion-regalo': errorDescripcionRegalo
-};
+    nombre: errorNombre,
+    ciudad: errorCiudad,
+    "descripcion-regalo": errorDescripcionRegalo,
+  };
 
-manejarErrores(errores)
-
-event.preventDefault()
-}
-
-function manejarErrores(errores){
-
-const keys = Object.keys(errores)
-
-keys.forEach(function(key){
-  const error = errores[key]
-  if (error) {
-    $form[key].className = 'error'
-  } else{
-    $form[key].className = ''
+  const esExito = manejarErrores(errores) === 0
+  if (esExito) {
+    $form.className = 'oculto'
+    document.querySelector('#exito').className = ''
   }
 
-})
 
-
-  
+  event.preventDefault();
 }
-  // errorNombre = errores.nombre
-  // errorCiudad = errores.ciudad
-  // errorDescripcion = errores.errorDescripcionRegalo
 
-  // if (errorNombre) {
-  //   $form.nombre.className = 'error'
-  // } else{
-  //   $form.nombre.className = ''
-  // }
+function manejarErrores(errores) {
+  const keys = Object.keys(errores);
+  const containerErrores = document.querySelector("#errores");
+  let cantidadErorres = 0;
+
+  keys.forEach(function (key) {
+    const error = errores[key];
+    if (error) {
+      $form[key].className = "error";
+      cantidadErorres++;
+
+      const $newLi = document.createElement("li"); //Tarea: Evitar que se sigan superponiendo los li
+      $newLi.className = 'new-li'
+      $newLi.innerText = error;
+      containerErrores.appendChild($newLi);
+
+      $newLi.style.listStyle = "none";
+    } else {
+      $form[key].className = "";
+    }
+  });
+
+  return cantidadErorres;
+}
 
 
-  // if (errorCiudad) {
-  //   $form.ciudad.className = 'error'
-  // } else{
-  //   $form.ciudad.className = ''
-  // }
+
+function borrarErrores(){
+  const liNode = document.querySelectorAll('.new-li')
+    for (let i = 0; i < liNode.length; i++) {
+      liNode[i].remove();
+      
+    }
+  }
+ 
 
 
-  // if (errorDescripcion) {
-  //   $form['descripcion-regalo'].className = "error"
-  // } else{
-  //   $form['descripcion-regalo'].className = ''
-  // }
+
+
+
+
+
+
+// errorNombre = errores.nombre
+// errorCiudad = errores.ciudad
+// errorDescripcion = errores.errorDescripcionRegalo
+
+// if (errorNombre) {
+//   $form.nombre.className = 'error'
+// } else{
+//   $form.nombre.className = ''
+// }
+
+// if (errorCiudad) {
+//   $form.ciudad.className = 'error'
+// } else{
+//   $form.ciudad.className = ''
+// }
+
+// if (errorDescripcion) {
+//   $form['descripcion-regalo'].className = "error"
+// } else{
+//   $form['descripcion-regalo'].className = ''
+// }
 // }
 
 const $form = document.querySelector("#carta-a-santa");
