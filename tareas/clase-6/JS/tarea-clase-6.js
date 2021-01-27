@@ -18,49 +18,51 @@ Punto bonus: si hay inputs vacíos, ignorarlos en el cálculo (no contarlos como
 const $membersLength = document.querySelector("#family-members");
 const $sendButton = document.querySelector("#members-button");
 const $calculate = document.querySelector("#calculate");
-const $reset = document.querySelector('#restart')
+const $reset = document.querySelector("#restart");
 
-$sendButton.onclick = function () {
+
+$sendButton.onclick = function (event) {
+  const cantidadIntegrantes = $form['family-members'].value
   deleteMembers();
   createMembers();
   
+  event.preventDefault()
 
-  return false;
 };
 
 $calculate.onclick = function () {
-
-
-
+  deleteResults()
+  showResults();
 
   return false;
 };
 
-$reset.onclick = function(){
-  deleteMembers()
-  $reset.className = 'oculto'
-}
-
+$reset.onclick = function () {
+  deleteMembers();
+  deleteResults();
+  $reset.className = "oculto";
+};
 
 function createMember(index) {
-  const $memberDiv = document.querySelector('#members-div');
-  
+  const $memberDiv = document.querySelector("#members-div");
+
   const $newLabel = document.createElement("label");
   $newLabel.textContent =
     "ingrese la edad del integrante " + (index + 1) + " :";
   const $newInput = document.createElement("input");
   $newInput.type = "number";
   $newInput.className = "member";
+  $newInput.name = 'age'
 
-  const $newDiv = document.createElement('div')
-  $newDiv.className = 'member-div'
-  $newDiv.appendChild($newLabel)
-  $newDiv.appendChild($newInput)
+  const $newDiv = document.createElement("div");
+  $newDiv.className = "member-div";
+  $newDiv.appendChild($newLabel);
+  $newDiv.appendChild($newInput);
 
   $memberDiv.appendChild($newDiv);
-  $reset.className = ''
+  $reset.className = "";
 
-  return false
+  return false;
 }
 
 function createMembers() {
@@ -74,15 +76,22 @@ function createMembers() {
     $calculate.style.display = "block";
   } else {
     $calculate.style.display = "none";
-  } 
+  }
 }
 
 function deleteMembers() {
-  const memberDiv = document.querySelectorAll('.member-div');
+  const memberDiv = document.querySelectorAll(".member-div");
   for (let i = 0; i < memberDiv.length; i++) {
     memberDiv[i].remove();
   }
-  $calculate.style.display = 'none'
+  $calculate.style.display = "none";
+}
+
+function deleteResults() {
+  const results = document.querySelectorAll(".result");
+  for (let i = 0; i < results.length; i++) {
+    results[i].textContent = "";
+  }
 }
 
 function membersAges() {
@@ -129,7 +138,7 @@ function oldestMember(memberAge) {
   return majorNumber;
 }
 
-function showResults(){
+function showResults() {
   const memberAge = membersAges();
   const averageResult = document.createTextNode(
     "La edad promedio es: " + averageAge(memberAge)
@@ -149,3 +158,60 @@ function showResults(){
   const $youngestMember = document.querySelector("#youngest-member");
   $youngestMember.appendChild(youngestResult);
 }
+
+function validarCantidadIntegrantes(integrantes) {
+  if (integrantes === '') {
+    return 'Debe ingresar al menos un integrante'
+  }
+
+  if (integrantes <= 0) {
+    return "Debe ingresar un numero mayor a 0"
+  } 
+
+  return "";
+}
+
+function validarEdadesIntegrantes(edadIntegrantes) {
+  for (let i = 0; i < edadIntegrantes.length; i++) {
+    if (edadIntegrantes[i].value <= 0) {
+      return "Las edades deben ser valores positivos";
+    } 
+  }
+  return ''
+}
+
+function validarForm(event){
+  const cantidadIntegrantes = $form['family-members'].value
+  const edades = document.querySelectorAll('.member')
+  const errorCantidadIntegrantes = validarCantidadIntegrantes(cantidadIntegrantes)
+  const errorEdadesIntegrantes = validarEdadesIntegrantes(edades)
+
+  const errores = {
+    'family-members': errorCantidadIntegrantes,
+     members: errorEdadesIntegrantes
+  }
+
+  manejarErrores(errores)
+
+  event.preventDefault()
+}
+
+function manejarErrores(errores){
+  const keys = Object.keys(errores)
+  keys.forEach(function (key) {
+    const error = errores[key]
+    if (error) {
+      $form[key].className = 'error'
+    } else {
+      $form[key].className = ''
+    }
+  });
+  
+
+}
+
+const $form = document.querySelector('#main-form')
+$form.onsubmit = validarForm()
+
+
+

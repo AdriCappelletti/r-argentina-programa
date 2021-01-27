@@ -3,31 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <title>Document</title>
   </head>
   <body>
     <main class="wrapper">
-      <Form id=main-form>
-    <label for="family-members">Cuantos integrantes hay en tu familia?</label>
-      <input type="number" id="family-members" name="family-members" />
-       <button id="members-button">Enviar</button><button id="clear" type="reset">Limpiar</button>  <!--<button type="reset" id="reset">Reiniciar</button>  -->
-    
-    <div id="members-div">
-      <!-- <form id="members-form">
-        
-      </form> -->
-    </div>
-    <button id="calculate">Calcular</button>
-    <div class="results">
-        <strong id="average-age"></strong><br>
-        <strong id="oldest-member"></strong><br>
-        <strong id="youngest-member"></strong><br>
-      </div>
-        
+      <form method="post" id="main-form">
+        <label for="family-members"
+          >Cuantos integrantes hay en tu familia?</label
+        >
+        <input type="number" id="family-members" name="family-members" />
+        <button id="members-button" type="submit">Enviar</button>
+        <button id="clear" type="reset">Limpiar</button>
+
+        <div id="members-div"></div>
+        <button id="calculate" type="submit">Calcular</button>
+        <div class="results">
+          <strong id="average-age" class="result"></strong><br />
+          <strong id="oldest-member" class="result"></strong><br />
+          <strong id="youngest-member" class="result"></strong><br />
+        </div>
+
         <button type="reset" id="restart" class="oculto">Reiniciar</button>
-      </Form>
-  </main>
-    <script src="tarea-clase-6.js"></script>
+      </form>
+    </main>
+    <script src="JS/tarea-clase-6.js"></script>
+    <script src="JS/pruebas.js"></script>
   </body>
 </html>
