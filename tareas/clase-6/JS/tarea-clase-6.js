@@ -19,22 +19,22 @@ const $membersLength = document.querySelector("#family-members");
 const $sendButton = document.querySelector("#members-button");
 const $calculate = document.querySelector("#calculate");
 const $reset = document.querySelector("#restart");
-
+const $form = document.querySelector("#main-form");
 
 $sendButton.onclick = function (event) {
-  const cantidadIntegrantes = $form['family-members'].value
+  const cantidadIntegrantes = $form["family-members"].value;
+  validarPrimerForm();
   deleteMembers();
   createMembers();
-  
-  event.preventDefault()
 
+  event.preventDefault();
 };
 
-$calculate.onclick = function () {
-  deleteResults()
-  showResults();
+$calculate.onclick = function (event) {
+  deleteResults();
+  validarSegundoForm();
 
-  return false;
+  event.preventDefault();
 };
 
 $reset.onclick = function () {
@@ -52,7 +52,7 @@ function createMember(index) {
   const $newInput = document.createElement("input");
   $newInput.type = "number";
   $newInput.className = "member";
-  $newInput.name = 'age'
+  $newInput.name = "age";
 
   const $newDiv = document.createElement("div");
   $newDiv.className = "member-div";
@@ -160,13 +160,13 @@ function showResults() {
 }
 
 function validarCantidadIntegrantes(integrantes) {
-  if (integrantes === '') {
-    return 'Debe ingresar al menos un integrante'
+  if (integrantes === "") {
+    return "Debe ingresar al menos un integrante";
   }
 
   if (integrantes <= 0) {
-    return "Debe ingresar un numero mayor a 0"
-  } 
+    return "Debe ingresar un numero mayor a 0";
+  }
 
   return "";
 }
@@ -175,43 +175,85 @@ function validarEdadesIntegrantes(edadIntegrantes) {
   for (let i = 0; i < edadIntegrantes.length; i++) {
     if (edadIntegrantes[i].value <= 0) {
       return "Las edades deben ser valores positivos";
-    } 
+    }
   }
-  return ''
+  return "";
 }
 
-function validarForm(event){
-  const cantidadIntegrantes = $form['family-members'].value
-  const edades = document.querySelectorAll('.member')
-  const errorCantidadIntegrantes = validarCantidadIntegrantes(cantidadIntegrantes)
-  const errorEdadesIntegrantes = validarEdadesIntegrantes(edades)
+function validarPrimerForm(event) {
+  const cantidadIntegrantes = $form["family-members"].value;
+
+  const errorCantidadIntegrantes = validarCantidadIntegrantes(
+    cantidadIntegrantes
+  );
 
   const errores = {
-    'family-members': errorCantidadIntegrantes,
-     members: errorEdadesIntegrantes
-  }
-
-  manejarErrores(errores)
-
-  event.preventDefault()
+    "family-members": errorCantidadIntegrantes,
+  };
+  manejarErrores(errores);
 }
 
-function manejarErrores(errores){
-  const keys = Object.keys(errores)
+function validarSegundoForm() {
+  const edades = document.querySelectorAll(".member");
+  const errorEdadesIntegrantes = validarEdadesIntegrantes(edades);
+
+  const errores = {
+    age: errorEdadesIntegrantes,
+  };
+
+  const exito = manejarErrores(errores) === 0;
+
+  if (exito) {
+    showResults();
+  }
+}
+
+function manejarErrores(errores) {
+  let cantidadErrores = 0;
+  const $errores = document.querySelector("#errores");
+  const keys = Object.keys(errores);
   keys.forEach(function (key) {
-    const error = errores[key]
-    if (error) {
-      $form[key].className = 'error'
+    const error = errores[key];
+    if (key === "age" && error !== "") {
+      const nodeList = $form[key];
+
+      for (let i = 0; i < nodeList.length; i++) {
+        nodeList[i].classList.add("error");
+      }
+      crearError(error);
+      return cantidadErrores++;
+    } else if (error) {
+      console.log(error);
+      $form[key].className = "error";
+      crearError(error);
+      cantidadErrores++;
     } else {
       $form[key].className = ''
+      const nodeList = $form[key];
+      for (let i = 0; i < nodeList.length; i++) {
+        nodeList[i].classList.remove('error')
+      }
+      $errores.className = "oculto";
     }
   });
-  
 
+  return cantidadErrores;
 }
 
-const $form = document.querySelector('#main-form')
-$form.onsubmit = validarForm()
+function crearError(error) {
+  resetErrores();
+  const $errores = document.querySelector("#errores");
+  const $ul = document.querySelector(".ulErrores");
+  const $newLi = document.createElement("li");
+  $newLi.className = "listErrores";
+  $newLi.innerText = error;
+  $ul.appendChild($newLi);
+  $errores.className = "";
+}
 
-
-
+function resetErrores() {
+  const $listErrores = document.querySelectorAll(".listErrores");
+  for (let i = 0; i < $listErrores.length; i++) {
+    $listErrores[i].remove();
+  }
+}
