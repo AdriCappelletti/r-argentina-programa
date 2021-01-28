@@ -72,6 +72,7 @@ function validarForm(event) {
   if (esExito) {
     $form.className = 'oculto'
     document.querySelector('#exito').className = ''
+    setTimeout(redireccion, 5000)
   }
 
 
@@ -103,7 +104,9 @@ function manejarErrores(errores) {
   return cantidadErorres;
 }
 
-
+function redireccion(){
+  window.location.href="wishlist.html"
+}
 
 function borrarErrores(){
   const liNode = document.querySelectorAll('.new-li')

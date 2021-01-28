@@ -171,6 +171,8 @@ function validarCantidadIntegrantes(integrantes) {
   return "";
 }
 
+//                                                                                      VALIDACIONES
+
 function validarEdadesIntegrantes(edadIntegrantes) {
   for (let i = 0; i < edadIntegrantes.length; i++) {
     if (edadIntegrantes[i].value <= 0) {
