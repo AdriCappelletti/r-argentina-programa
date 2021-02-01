@@ -22,17 +22,17 @@ const $reset = document.querySelector("#restart");
 const $form = document.querySelector("#main-form");
 
 $sendButton.onclick = function (event) {
-  const cantidadIntegrantes = $form["family-members"].value;
-  validarPrimerForm();
+  const membersQuantity = $form["family-members"].value;
+  ValidateFormMembersQuantity()
   deleteMembers();
-  createMembers();
+  createMembers(membersQuantity);
 
   event.preventDefault();
 };
 
 $calculate.onclick = function (event) {
   deleteResults();
-  validarSegundoForm();
+  validateFormMembersAges();
 
   event.preventDefault();
 };
@@ -55,7 +55,7 @@ function createMember(index) {
   $newInput.name = "age";
 
   const $newDiv = document.createElement("div");
-  $newDiv.className = "member-div";
+  $newDiv.className = "member-container";
   $newDiv.appendChild($newLabel);
   $newDiv.appendChild($newInput);
 
@@ -65,8 +65,8 @@ function createMember(index) {
   return false;
 }
 
-function createMembers() {
-  let membersValue = $membersLength.value;
+function createMembers(quantity) {
+  let membersValue = quantity;
 
   for (let i = 0; i < membersValue; i++) {
     createMember(i);
@@ -80,7 +80,7 @@ function createMembers() {
 }
 
 function deleteMembers() {
-  const memberDiv = document.querySelectorAll(".member-div");
+  const memberDiv = document.querySelectorAll(".member-container");
   for (let i = 0; i < memberDiv.length; i++) {
     memberDiv[i].remove();
   }
@@ -159,7 +159,7 @@ function showResults() {
   $youngestMember.appendChild(youngestResult);
 }
 
-function validarCantidadIntegrantes(integrantes) {
+function validateMembersQuantity(integrantes) {
   if (integrantes === "") {
     return "Debe ingresar al menos un integrante";
   }
@@ -167,13 +167,11 @@ function validarCantidadIntegrantes(integrantes) {
   if (integrantes <= 0) {
     return "Debe ingresar un numero mayor a 0";
   }
-
+  
   return "";
 }
 
-//                                                                                      VALIDACIONES
-
-function validarEdadesIntegrantes(edadIntegrantes) {
+function validateMembersAges(edadIntegrantes) {
   for (let i = 0; i < edadIntegrantes.length; i++) {
     if (edadIntegrantes[i].value <= 0) {
       return "Las edades deben ser valores positivos";
@@ -181,29 +179,31 @@ function validarEdadesIntegrantes(edadIntegrantes) {
   }
   return "";
 }
+//                                                                                      VALIDACIONES
 
-function validarPrimerForm(event) {
+
+function ValidateFormMembersQuantity(event) {
   const cantidadIntegrantes = $form["family-members"].value;
-
-  const errorCantidadIntegrantes = validarCantidadIntegrantes(
+  
+  const errorCantidadIntegrantes = validateMembersQuantity(
     cantidadIntegrantes
-  );
+    );
+    
+    const errores = {
+      "family-members": errorCantidadIntegrantes,
+    };
+    manejarErrores(errores);
+  }
+  
+function validateFormMembersAges() {
+  const ages = document.querySelectorAll(".member");
+  const errorEdadesIntegrantes = validateMembersAges(ages);
 
-  const errores = {
-    "family-members": errorCantidadIntegrantes,
-  };
-  manejarErrores(errores);
-}
-
-function validarSegundoForm() {
-  const edades = document.querySelectorAll(".member");
-  const errorEdadesIntegrantes = validarEdadesIntegrantes(edades);
-
-  const errores = {
+  const errors = {
     age: errorEdadesIntegrantes,
   };
 
-  const exito = manejarErrores(errores) === 0;
+  const exito = manejarErrores(errors) === 0;
 
   if (exito) {
     showResults();
@@ -222,12 +222,12 @@ function manejarErrores(errores) {
       for (let i = 0; i < nodeList.length; i++) {
         nodeList[i].classList.add("error");
       }
-      crearError(error);
+      createError(error);
       return cantidadErrores++;
     } else if (error) {
       console.log(error);
       $form[key].className = "error";
-      crearError(error);
+      createError(error);
       cantidadErrores++;
     } else {
       $form[key].className = ''
@@ -242,20 +242,20 @@ function manejarErrores(errores) {
   return cantidadErrores;
 }
 
-function crearError(error) {
-  resetErrores();
+function createError(error) {
+  resetError();
   const $errores = document.querySelector("#errores");
   const $ul = document.querySelector(".ulErrores");
   const $newLi = document.createElement("li");
-  $newLi.className = "listErrores";
+  $newLi.className = "listError";
   $newLi.innerText = error;
   $ul.appendChild($newLi);
   $errores.className = "";
 }
 
-function resetErrores() {
-  const $listErrores = document.querySelectorAll(".listErrores");
-  for (let i = 0; i < $listErrores.length; i++) {
-    $listErrores[i].remove();
+function resetError() {
+  const $listError = document.querySelectorAll(".listError");
+  for (let i = 0; i < $listError.length; i++) {
+    $listError[i].remove();
   }
 }
