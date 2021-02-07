@@ -37,7 +37,7 @@ $enviarDatos.onclick = function () {
 let $form = document.querySelector("#form");
 function validarHoras(horas) {
   for (let i = 0; i < horas.length; i++) {
-    let hora = segundos[i].value;
+    let hora = horas[i].value;
     if (!/[0-9]+$/.test(hora)) {
       return "Completa todas las horas con numeros positivos";
     }
