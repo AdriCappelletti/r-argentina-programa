@@ -27,11 +27,51 @@ $enviarDatos.onclick = function () {
   const horasFinales = horasTotales + Math.round(minutosFinales / 60);
 
   const textNode = document.createTextNode(
-    `tu tiempo es ${horasFinales} horas ${minutosFinales} minutos ${segundosFinales} segundos`
+    `El tiempo total es de ${horasFinales} horas ${minutosFinales} minutos ${segundosFinales} segundos`
   );
   document.querySelector("#tiempo-total-videos").appendChild(textNode);
 
   return false;
 };
 
-console.log(20 % 60);
+let $form = document.querySelector("#form");
+function validarHoras(horas) {
+  for (let i = 0; i < horas.length; i++) {
+    let hora = segundos[i].value;
+    if (!/[0-9]+$/.test(hora)) {
+      return "Ingresa al menos un numero positivo";
+    }
+  }
+  return "";
+}
+
+function validarMinutos(minutos) {
+  for (let i = 0; i < minutos.length; i++) {
+    let minuto = minutos[i].value;
+    if (!/[0-9]+$/.test(minuto)) {
+      return "Ingresa al menos un numero positivo";
+    }
+  }
+  return "";
+}
+
+function validarSegundos(segundos) {
+  for (let i = 0; i < segundos.length; i++) {
+    let segundo = segundos[i].value;
+    if (!/[0-9]+$/.test(segundo)) {
+      return "Ingresa al menos un numero positivo";
+    }
+  }
+  return "";
+}
+
+function validarForm(event) {
+  const horas = $form.horas
+  const minutos = $form.minutos
+  const segundos = $form.segundos
+
+  const errorHoras = validarHoras(horas)
+  const errorMinutos = validarMinutos(minutos)
+  const errorSegundos = validarSegundos(segundos)
+
+}
