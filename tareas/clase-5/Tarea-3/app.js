@@ -39,7 +39,7 @@ function validarHoras(horas) {
   for (let i = 0; i < horas.length; i++) {
     let hora = segundos[i].value;
     if (!/[0-9]+$/.test(hora)) {
-      return "Ingresa al menos un numero positivo";
+      return "Completa todas las horas con numeros positivos";
     }
   }
   return "";
@@ -49,7 +49,7 @@ function validarMinutos(minutos) {
   for (let i = 0; i < minutos.length; i++) {
     let minuto = minutos[i].value;
     if (!/[0-9]+$/.test(minuto)) {
-      return "Ingresa al menos un numero positivo";
+      return "Completa todos los minutos con numeros positivos";
     }
   }
   return "";
@@ -59,19 +59,24 @@ function validarSegundos(segundos) {
   for (let i = 0; i < segundos.length; i++) {
     let segundo = segundos[i].value;
     if (!/[0-9]+$/.test(segundo)) {
-      return "Ingresa al menos un numero positivo";
+      return "Completa todos los segundos con numeros positivos";
     }
   }
   return "";
 }
 
 function validarForm(event) {
-  const horas = $form.horas
-  const minutos = $form.minutos
-  const segundos = $form.segundos
+  const horas = $form.horas;
+  const minutos = $form.minutos;
+  const segundos = $form.segundos;
 
-  const errorHoras = validarHoras(horas)
-  const errorMinutos = validarMinutos(minutos)
-  const errorSegundos = validarSegundos(segundos)
+  const errorHoras = validarHoras(horas);
+  const errorMinutos = validarMinutos(minutos);
+  const errorSegundos = validarSegundos(segundos);
 
+  const errores = {
+    horas: errorHoras,
+    minutos: errorMinutos,
+    segundos: errorSegundos,
+  };
 }
