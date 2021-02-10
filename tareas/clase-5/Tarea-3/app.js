@@ -4,6 +4,7 @@ const segundos = document.querySelectorAll(".segundos");
 
 const $enviarDatos = document.querySelector("#calcular");
 
+
 $enviarDatos.onclick = function () {
   let horasTotales = 0;
   let minutosTotales = 0;
@@ -11,7 +12,6 @@ $enviarDatos.onclick = function () {
 
   for (let i = 0; i < horas.length; i++) {
     horasTotales += Number(horas[i].value);
-    console.log(typeof horas[i].value);
   }
 
   for (let i = 0; i < minutos.length; i++) {
@@ -34,7 +34,7 @@ $enviarDatos.onclick = function () {
   return false;
 };
 
-let $form = document.querySelector("#form");
+
 function validarHoras(horas) {
   for (let i = 0; i < horas.length; i++) {
     let hora = horas[i].value;
@@ -79,4 +79,20 @@ function validarForm(event) {
     minutos: errorMinutos,
     segundos: errorSegundos,
   };
+manejarErrores(errores)
 }
+
+function manejarErrores(errores) {
+  keys = Object.keys(errores)
+  keys.forEach(key => {
+    const error = errores[key]
+    console.log(error)
+  });
+
+  event.preventDefault()
+
+}
+
+const $form = document.querySelector('#form-tiempo-total');
+$form.onsubmit = validarForm
+
