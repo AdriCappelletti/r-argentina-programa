@@ -1,39 +1,51 @@
-const horas = document.querySelectorAll(".horas");
-const minutos = document.querySelectorAll(".minutos");
-const segundos = document.querySelectorAll(".segundos");
-
 const $enviarDatos = document.querySelector("#calcular");
 
-
 $enviarDatos.onclick = function () {
-  let horasTotales = 0;
-  let minutosTotales = 0;
-  let segundosTotales = 0;
-
-  for (let i = 0; i < horas.length; i++) {
-    horasTotales += Number(horas[i].value);
-  }
-
-  for (let i = 0; i < minutos.length; i++) {
-    minutosTotales += Number(minutos[i].value);
-  }
-
-  for (let i = 0; i < segundos.length; i++) {
-    segundosTotales += Number(segundos[i].value);
-  }
-  const segundosFinales = Math.round(segundosTotales % 60);
-  const minutosFinales =
-    Math.round(segundosTotales / 60) + Math.round(minutosTotales % 60);
-  const horasFinales = horasTotales + Math.round(minutosFinales / 60);
-
-  const textNode = document.createTextNode(
-    `El tiempo total es de ${horasFinales} horas ${minutosFinales} minutos ${segundosFinales} segundos`
-  );
-  document.querySelector("#tiempo-total-videos").appendChild(textNode);
-
+  validarForm();
   return false;
 };
 
+function calcularHoras(horas) {
+  horas = document.querySelectorAll(".horas");
+  let horasTotales = 0;
+  for (let i = 0; i < horas.length; i++) {
+    horasTotales += Number(horas[i].value);
+  }
+  return horasTotales;
+}
+
+function calcularMinutos(minutos) {
+  minutos = document.querySelectorAll(".minutos");
+  let minutosTotales = 0;
+  for (let i = 0; i < minutos.length; i++) {
+    minutosTotales += Number(minutos[i].value);
+  }
+  return minutosTotales;
+}
+
+
+
+function calcularSegundos(segundos) {
+  segundos = document.querySelectorAll(".segundos");
+  let segundosTotales = 0;
+  for (let i = 0; i < segundos.length; i++) {
+    segundosTotales += Number(segundos[i].value);
+  }
+  return segundosTotales;
+}
+
+function calcularTiempoTotal(){
+  const horasTotales = calcularHoras()
+  const minutosTotales = calcularMinutos()
+  const segundosTotales = calcularSegundos()
+
+  const segundosFinales = Math.round(segundosTotales % 60);
+  const minutosFinales = Math.round(segundosTotales / 60) + Math.round(minutosTotales % 60);
+  const horasFinales = horasTotales + Math.round(minutosFinales / 60);
+
+  mostrarResultados(horasFinales, minutosFinales, segundosFinales)
+  
+}
 
 function validarHoras(horas) {
   for (let i = 0; i < horas.length; i++) {
@@ -65,6 +77,13 @@ function validarSegundos(segundos) {
   return "";
 }
 
+function mostrarResultados(horasFinales, minutosFinales, segundosFinales) {
+  const textNode = document.createTextNode(
+    `El tiempo total es de ${horasFinales} horas ${minutosFinales} minutos ${segundosFinales} segundos`
+  );
+  document.querySelector("#tiempo-total-videos").appendChild(textNode);
+}
+
 function validarForm(event) {
   const horas = $form.horas;
   const minutos = $form.minutos;
@@ -79,20 +98,36 @@ function validarForm(event) {
     minutos: errorMinutos,
     segundos: errorSegundos,
   };
-manejarErrores(errores)
+  const exito = manejarErrores(errores) === 0;
+  if (exito) {
+    calcularTiempoTotal()
+  }
+  // event.preventDefault()
+  // console.log('123')
 }
 
 function manejarErrores(errores) {
-  keys = Object.keys(errores)
-  keys.forEach(key => {
-    const error = errores[key]
-    console.log(error)
+  let cantidadErrores = 0
+  keys = Object.keys(errores);
+  keys.forEach((key) => {
+    const error = errores[key];
+    if (error) {
+      const nodeList = $form[key];
+      for (let i = 0; i < nodeList.length; i++) {
+        nodeList[i].classList.add("error");
+      }
+      return cantidadErrores++
+    } else {
+      const nodeList = $form[key]
+      for (let i = 0; i < nodeList.length; i++) {
+        nodeList[i].classList.remove('error')
+        
+      }
+    }
   });
 
-  event.preventDefault()
-
+  return cantidadErrores
 }
 
-const $form = document.querySelector('#form-tiempo-total');
-$form.onsubmit = validarForm
-
+const $form = document.querySelector("#form-tiempo-total");
+// $form.onsubmit = validarForm()

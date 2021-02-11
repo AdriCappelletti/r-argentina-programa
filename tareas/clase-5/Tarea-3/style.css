@@ -21,3 +21,8 @@ body{
 form{
     margin-top: 3em;
 }
+
+.error{
+    border: 2px solid red;
+    margin: .5em 0;
+}
