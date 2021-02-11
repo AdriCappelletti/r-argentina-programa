@@ -71,7 +71,6 @@ function validarForm(event) {
     calcularTiempoTotal()
   }
   event.preventDefault()
-  console.log('123')
 }
 
 function manejarErrores(errores) {
