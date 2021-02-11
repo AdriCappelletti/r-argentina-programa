@@ -1,38 +1,3 @@
-const $enviarDatos = document.querySelector("#calcular");
-
-$enviarDatos.onclick = function () {
-  validarForm();
-  return false;
-};
-
-function calcularHoras(horas) {
-  horas = document.querySelectorAll(".horas");
-  let horasTotales = 0;
-  for (let i = 0; i < horas.length; i++) {
-    horasTotales += Number(horas[i].value);
-  }
-  return horasTotales;
-}
-
-function calcularMinutos(minutos) {
-  minutos = document.querySelectorAll(".minutos");
-  let minutosTotales = 0;
-  for (let i = 0; i < minutos.length; i++) {
-    minutosTotales += Number(minutos[i].value);
-  }
-  return minutosTotales;
-}
-
-
-
-function calcularSegundos(segundos) {
-  segundos = document.querySelectorAll(".segundos");
-  let segundosTotales = 0;
-  for (let i = 0; i < segundos.length; i++) {
-    segundosTotales += Number(segundos[i].value);
-  }
-  return segundosTotales;
-}
 
 function calcularTiempoTotal(){
   const horasTotales = calcularHoras()
@@ -81,7 +46,10 @@ function mostrarResultados(horasFinales, minutosFinales, segundosFinales) {
   const textNode = document.createTextNode(
     `El tiempo total es de ${horasFinales} horas ${minutosFinales} minutos ${segundosFinales} segundos`
   );
-  document.querySelector("#tiempo-total-videos").appendChild(textNode);
+
+  const $tiempoTotal = document.querySelector("#tiempo-total-videos")
+  borrarResultados($tiempoTotal)
+  $tiempoTotal.appendChild(textNode);
 }
 
 function validarForm(event) {
@@ -102,8 +70,8 @@ function validarForm(event) {
   if (exito) {
     calcularTiempoTotal()
   }
-  // event.preventDefault()
-  // console.log('123')
+  event.preventDefault()
+  console.log('123')
 }
 
 function manejarErrores(errores) {
@@ -115,7 +83,9 @@ function manejarErrores(errores) {
       const nodeList = $form[key];
       for (let i = 0; i < nodeList.length; i++) {
         nodeList[i].classList.add("error");
-      }
+      } 
+      const $tiempoTotal = document.querySelector("#tiempo-total-videos")
+      borrarResultados($tiempoTotal)
       return cantidadErrores++
     } else {
       const nodeList = $form[key]
@@ -129,5 +99,9 @@ function manejarErrores(errores) {
   return cantidadErrores
 }
 
+function borrarResultados(tiempoTotal){
+  tiempoTotal.textContent = ''
+}
+
 const $form = document.querySelector("#form-tiempo-total");
-// $form.onsubmit = validarForm()
+$form.onsubmit = validarForm
