@@ -7,7 +7,7 @@
 // Imprimir "Hola " y el nombre, " te llamás igual que mi ..."
 // Si no, simplemente imprimir "Hola " + nombre!
 
-let userName = prompt('Hola! como te llamas?').toLowerCase()
+// let userName = prompt('Hola! como te llamas?').toLowerCase()
 
 function compareNames(name) {
     const myName = 'Adriano'.toLowerCase()
@@ -26,6 +26,19 @@ function compareNames(name) {
 //Tarea 2:
 // Preguntar la edad del usuario
 // Hacerle saber si tiene más, menos ó la misma edad que nosotros.
+
+function  sameAge() {
+    let myAge = '23'
+    const userAge = prompt('Cual es tu edad?')
+    if (userAge === myAge) {
+        console.log('Tenemos la misma edad!')
+    } else if (userAge > myAge) {
+        console.log('Sos mas grande que yo')
+    } else{
+        console.log('sos mas chico/a')
+    }
+}
+sameAge()
 
 //Tarea 3:
 // Preguntarle al usuario si tiene documento, y que conteste con "si" o "no".
