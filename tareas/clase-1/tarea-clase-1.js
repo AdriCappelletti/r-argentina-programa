@@ -36,13 +36,20 @@ function calcularSalarioDiario(salarioAnual) {
     return salarioAnual / cantidadDiasEnUnAnio;
 }
 
+function calcularSalarioPorHora(salarioDiario){
+    return salarioDiario / horasTrabajadas
+}
+
 const salarioMensual = Number(prompt('Cuál es tu salario mensual?'));
+const horasTrabajadas = Number(prompt('Cuantas horas trabajas por día?'))
 console.log('Tu salario anual es ' + calcularSalarioAnual(salarioMensual));
 
-const salarioAnual = Number(prompt('Cuál es tu salario mensual?'));
+const salarioAnual = Number(prompt('Cuál es tu salario anual?'));
+const salarioDiario = calcularSalarioDiario(salarioAnual)
 console.log('Tu salario mensual es ' + calcularSalarioMensual(salarioAnual));
 console.log('Tu salario semanal es ' + calcularSalarioSemanal(salarioAnual));
-console.log('Tu salario diario es ' + calcularSalarioDiario(salarioAnual));
+console.log('Tu salario diario es ' + salarioDiario);
+console.log('Tu salario por hora es ' + calcularSalarioPorHora(salarioDiario))
 
 /// SCOPE
 
