@@ -1,0 +1,26 @@
+{
+  "name": "r-argentina-programa-intoduccion-js",
+  "version": "1.0.0",
+  "description": "Tareas con bootstrap",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdriCappelletti/r-argentina-programa.git"
+  },
+  "author": "Adriano Cappelletti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AdriCappelletti/r-argentina-programa/issues"
+  },
+  "homepage": "https://github.com/AdriCappelletti/r-argentina-programa#readme",
+  "dependencies": {
+    "bootstrap": "^4.6.0",
+    "jquery": "^3.5.1"
+  }
+}

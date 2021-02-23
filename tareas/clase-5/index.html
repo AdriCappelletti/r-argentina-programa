@@ -5,25 +5,27 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/CSS/style.css">
+    
+
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <title>Clase 5</title>
 </head>
-<body>
- <div class="wrapper">
-     <form action="" class="form-salario">
-         <div class="form-salario__group">
-         <label for="salario-anual">Ingrese su salario anual</label>
-         <input type="number" name="salario-anual" id="salario-anual" placeholder="ej: 10000">
+<body class="d-flex align-items-center justify-content-center" style="height: 100vh;">
+  <form >
+    <div class="container d-flex ">
+      <div class="row">
+        <div class="col-sm">
+          <input id="salario-anual" class="form-control form-control-lg" type="text" placeholder="Ingrese su salario anual" aria-label=".form-control-lg example">
         </div>
-         <button id="calculo-salario">Calcula tu salario mensual!</button>
-         <div class="form-salario__group">
-         <label for="salario-mensual" class="salario-mensual">Su salario mensual es de:</label>
-         <input type="number" disabled name="salario-mensual" id="salario-mensual">
+        <div class="col-sm">
+          <button type="button" id="calculo-salario" class="btn col-sm btn-primary" >Calcular</button>
         </div>
-     </form>
- </div>
-
-
+        <div class="col-sm">
+          <input id="salario-mensual" class="form-control" type="text" placeholder="Su salario mensual es:" aria-label="Disabled input example" disabled readonly>
+        </div>
+      </div>
+    </div>
+  </form>
 <script src="tarea1.js"></script>    
 </body>
 </html>
