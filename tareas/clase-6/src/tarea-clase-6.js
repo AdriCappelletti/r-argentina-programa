@@ -178,8 +178,8 @@ function validateMembersAges(edadIntegrantes) {
     }
   }
   return "";
-}
-//                                                                                      VALIDACIONES
+  }
+//                                                                                 VALIDACIONES
 
 
 function ValidateFormMembersQuantity(event) {
@@ -230,8 +230,10 @@ function manejarErrores(errores) {
       createError(error);
       cantidadErrores++;
     } else {
-      $form[key].className = ''
       const nodeList = $form[key];
+      if (nodeList.length != 0) {
+        nodeList.classList.remove('error')
+      }
       for (let i = 0; i < nodeList.length; i++) {
         nodeList[i].classList.remove('error')
       }

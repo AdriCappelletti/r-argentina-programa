@@ -21,6 +21,7 @@
   "homepage": "https://github.com/AdriCappelletti/r-argentina-programa#readme",
   "dependencies": {
     "bootstrap": "^4.6.0",
+    "cypress": "^6.8.0",
     "jquery": "^3.5.1"
   }
 }
