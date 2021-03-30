@@ -7,6 +7,8 @@ Al hacer click en "calcular", mostrar en un elemento pre-existente la mayor edad
 Punto bonus: Crear un botón para "empezar de nuevo" que empiece el proceso nuevamente, borrando los inputs ya creados (investigar cómo en MDN).
 */
 
+
+
 /*
 TAREA:
 Crear una interfaz que permita agregar ó quitar (botones agregar y quitar) inputs+labels para completar el salario anual de cada integrante de la familia que trabaje.
@@ -23,7 +25,7 @@ const $form = document.querySelector("#main-form");
 
 $sendButton.onclick = function (event) {
   const membersQuantity = $form["family-members"].value;
-  ValidateFormMembersQuantity()
+  ValidateFormMembersQuantity();
   deleteMembers();
   createMembers(membersQuantity);
 
@@ -140,23 +142,8 @@ function oldestMember(memberAge) {
 
 function showResults() {
   const memberAge = membersAges();
-  const averageResult = document.createTextNode(
-    "La edad promedio es: " + averageAge(memberAge)
-  );
-  const $averageAge = document.querySelector("#average-age");
-  $averageAge.appendChild(averageResult);
+  createResultsContainers(averageAge(memberAge), youngestMember(memberAge), oldestMember(memberAge))
 
-  const oldestResult = document.createTextNode(
-    "La mayor edad es: " + oldestMember(memberAge)
-  );
-  const $oldestMember = document.querySelector("#oldest-member");
-  $oldestMember.appendChild(oldestResult);
-
-  const youngestResult = document.createTextNode(
-    "La menor edad es: " + youngestMember(memberAge)
-  );
-  const $youngestMember = document.querySelector("#youngest-member");
-  $youngestMember.appendChild(youngestResult);
 }
 
 function validateMembersQuantity(integrantes) {
@@ -167,34 +154,31 @@ function validateMembersQuantity(integrantes) {
   if (integrantes <= 0) {
     return "Debe ingresar un numero mayor a 0";
   }
-  
+
   return "";
 }
 
 function validateMembersAges(edadIntegrantes) {
   for (let i = 0; i < edadIntegrantes.length; i++) {
     if (edadIntegrantes[i].value <= 0) {
-      return "Las edades deben ser valores positivos";
+      return "Las edades deben ser valores mayores que 0";
     }
   }
   return "";
-  }
+}
 //                                                                                 VALIDACIONES
-
 
 function ValidateFormMembersQuantity(event) {
   const cantidadIntegrantes = $form["family-members"].value;
-  
-  const errorCantidadIntegrantes = validateMembersQuantity(
-    cantidadIntegrantes
-    );
-    
-    const errores = {
-      "family-members": errorCantidadIntegrantes,
-    };
-    manejarErrores(errores);
-  }
-  
+
+  const errorCantidadIntegrantes = validateMembersQuantity(cantidadIntegrantes);
+
+  const errores = {
+    "family-members": errorCantidadIntegrantes,
+  };
+  manejarErrores(errores);
+}
+
 function validateFormMembersAges() {
   const ages = document.querySelectorAll(".member");
   const errorEdadesIntegrantes = validateMembersAges(ages);
@@ -218,7 +202,7 @@ function manejarErrores(errores) {
     const error = errores[key];
     if (key === "age" && error !== "") {
       const nodeList = $form[key];
-
+      deleteResults()
       for (let i = 0; i < nodeList.length; i++) {
         nodeList[i].classList.add("error");
       }
@@ -231,11 +215,8 @@ function manejarErrores(errores) {
       cantidadErrores++;
     } else {
       const nodeList = $form[key];
-      if (nodeList.length != 0) {
-        nodeList.classList.remove('error')
-      }
       for (let i = 0; i < nodeList.length; i++) {
-        nodeList[i].classList.remove('error')
+        nodeList[i].classList.remove("error");
       }
       $errores.className = "oculto";
     }
@@ -260,4 +241,37 @@ function resetError() {
   for (let i = 0; i < $listError.length; i++) {
     $listError[i].remove();
   }
+}
+
+function createResultsContainers(averageAge, youngestMember, oldestMember) {
+  const $results = document.querySelector(".results");
+  const $averageAge = document.createElement("strong");
+  $averageAge.classList.add("average-age", "result");
+  $averageAge.textContent = "La edad promedio es: " + averageAge;
+  const $youngestMember = document.createElement("strong");
+  $youngestMember.classList.add("youngest-member","result");
+  $youngestMember.textContent = "La menor edad es: " + youngestMember;
+  const $oldestMember = document.createElement("strong");
+  $oldestMember.classList.add("oldest-member", "result");
+  $oldestMember.textContent = "La mayor edad es: " + oldestMember;
+
+  const membersResults = [$averageAge, $youngestMember, $oldestMember]
+
+  for (let i = 0; i < membersResults.length; i++) {
+    $results.appendChild(membersResults[i])
+
+  }
+
+}
+
+function deleteResults() {
+  const results = document.querySelectorAll('.result')
+  if (results.length === 3) {
+    results.forEach(result => {
+      result.remove()
+    });
+  } else {
+    return false
+  }
+
 }
